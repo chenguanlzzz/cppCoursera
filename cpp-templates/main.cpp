@@ -1,6 +1,6 @@
 /**
  * Simple use of C++ templates.
- * 
+ *
  * @author
  *   Wade Fagen-Ulmschneider <waf@illinois.edu>
  */
@@ -16,15 +16,20 @@ using uiuc::Cube;
 // We'll call this my_max to avoid conflicts with the "max" in the
 // standard libraries.
 template <typename T>
-T my_max(T a, T b) {
-  if (a > b) { return a; }
+T my_max(T a, T b)
+{
+  if (a > b)
+  {
+    return a;
+  }
   return b;
 }
 
-int main() {
+int main()
+{
   cout << "my_max(3, 5): " << my_max(3, 5) << endl;
   cout << "my_max('a', 'd'): " << my_max('a', 'd') << endl;
-  
+
   // Here we construct std::string objects from the literal strings in
   // quotation marks, because the std::string object already implements
   // the ">" operator to do alphabetical ordering. A plain string literal
@@ -32,10 +37,11 @@ int main() {
   // (Instead, it would just compare the addresses of the arrays.)
   cout << "my_max(std::string(\"Hello\"), std::string(\"World\")): "
        << my_max(std::string("Hello"), std::string("World")) << endl;
-
+  cout << "my_max(\"Hello\", \"A\"): "
+       << my_max("Hello", "A") << endl;
   // You need to finish implementing the ">" operator for Cube to get the
   // next line to work!
-  // cout << "my_max( Cube(3), Cube(6) ): " << my_max( Cube(3), Cube(6) ) << endl;
+  cout << "my_max( Cube(10), Cube(6) ): " << my_max(Cube(20), Cube(16)) << endl;
 
   return 0;
 }
