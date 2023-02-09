@@ -1899,8 +1899,11 @@ namespace Catch
 #else // CATCH_CONFIG_FAST_COMPILE
 
 #define INTERNAL_CATCH_TRY try
-#define INTERNAL_CATCH_CATCH(handler) \
-    catch (...) { handler.handleUnexpectedInflightException(); }
+#define INTERNAL_CATCH_CATCH(handler)                \
+    catch (...)                                      \
+    {                                                \
+        handler.handleUnexpectedInflightException(); \
+    }
 
 #endif
 
@@ -1920,7 +1923,7 @@ namespace Catch
         INTERNAL_CATCH_CATCH(catchAssertionHandler)                                                                                                  \
         INTERNAL_CATCH_REACT(catchAssertionHandler)                                                                                                  \
     } while ((void)0, false && static_cast<bool>(!!(__VA_ARGS__))) // the expression here is never evaluated at runtime but it forces the compiler to give it a look
-  // The double negation silences MSVC's C4800 warning, the static_cast forces short-circuit evaluation if the type has overloaded &&.
+                                                                   // The double negation silences MSVC's C4800 warning, the static_cast forces short-circuit evaluation if the type has overloaded &&.
 
 ///////////////////////////////////////////////////////////////////////////////
 #define INTERNAL_CATCH_IF(macroName, resultDisposition, ...)        \
@@ -3971,11 +3974,11 @@ namespace Catch
     public:
         Option() : nullableValue(nullptr) {}
         Option(T const &_value)
-            : nullableValue(new (storage) T(_value))
+            : nullableValue(new(storage) T(_value))
         {
         }
         Option(Option const &_other)
-            : nullableValue(_other ? new (storage) T(*_other) : nullptr)
+            : nullableValue(_other ? new(storage) T(*_other) : nullptr)
         {
         }
 
@@ -7092,7 +7095,7 @@ namespace Catch
                 showHelpFlag = flag;
                 return ParserResult::ok( ParseResultType::ShortCircuitAll ); })
                 {
-                    static_cast<Opt &> (*this)("display usage information")
+                    static_cast<Opt &>(*this)("display usage information")
                         ["-?"]["-h"]["--help"]
                             .optional();
                 }
